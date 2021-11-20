@@ -16,9 +16,13 @@ QuantumLayer class
 Constructor accepts the following parameters:
 
 qubits: Number of qubits in the register. [default=3]
+
 instructions: Quantum circuit following the register. [default=None]
+
 execute_on_IBMQ: If set to True, the QuantumDense layer will look for the optimal quantum device to execute the circuit. If set to False the layer will be simulated using Aer. [default=False]
+
 shots: Number of times the circuit will be executed. [defaul=10]
+
 use_parameter_shift_gradient_flow: If set to False the optimiser will apply small constant updates to the parameters. If set to True the full parameter shift rule will be applied resulting in a threefold increase in execution times as the circuit will need to be re-executed twice for every record in each learning epoch. [default = False]
 
 The QuantumDense.py file contains an example of usage creating a three layer VQNN model:
