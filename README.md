@@ -27,6 +27,7 @@ Constructor accepts the following parameters:
 
 The QuantumDense.py file contains an example of usage creating a three layer VQNN model:
 
+```Python
 class VQNNModel(tf.keras.Model):
 
     def __init__(self):
@@ -46,3 +47,4 @@ class VQNNModel(tf.keras.Model):
         except QiskitCircuitModuleException as qex:
             print(qex)
         return x 
+```
