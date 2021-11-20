@@ -1,5 +1,4 @@
-# tensorflow-quantum_dense
-The QuantumDense Tensorflow layer 
+# The QuantumDense Tensorflow layer 
 
 This repository, is an early attempt to integrate Tensorflow with IBM Qiskit in an effort to implement a parameterised Quantum Neural layer within a classical Neural Network  structure.
 
