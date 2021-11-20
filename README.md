@@ -24,7 +24,9 @@ use_parameter_shift_gradient_flow: If set to False the optimiser will apply smal
 The QuantumDense.py file contains an example of usage creating a three layer VQNN model:
 
 class VQNNModel(tf.keras.Model):
+
     def __init__(self):
+    
         super(VQNNModel, self).__init__(name='VQNN')
 
         self.driver_layer = tf.keras.layers.Dense(3, activation='relu')
