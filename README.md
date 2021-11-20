@@ -9,3 +9,34 @@ The QuantumDense layer module inherits from the tensorflow.keras.layers.Layer ov
 The layer can be executed either in simulated mode or can be sent to IBM Quantum for real-hardware execution, in the later case the layer will automatically choose the best Quantum node to execute in. Both mini constant gradient or parameter shift gradient updates can be used during the optimisation phase.
 
 Please refer to the relevant developer community article for examples of usage at Refinitiv - an LSEG business. https://developers.refinitiv.com/en
+
+QuantumLayer class
+============================
+
+Constructor accepts the following parameters:
+
+qubits: Number of qubits in the register. [default=3]
+instructions: Quantum circuit following the register. [default=None]
+execute_on_IBMQ: If set to True, the QuantumDense layer will look for the optimal quantum device to execute the circuit. If set to False the layer will be simulated using Aer. [default=False]
+shots: Number of times the circuit will be executed. [defaul=10]
+use_parameter_shift_gradient_flow: If set to False the optimiser will apply small constant updates to the parameters. If set to True the full parameter shift rule will be applied resulting in a threefold increase in execution times as the circuit will need to be re-executed twice for every record in each learning epoch. [default = False]
+
+The QuantumDense.py file contains an example of usage creating a three layer VQNN model:
+
+class VQNNModel(tf.keras.Model):
+    def __init__(self):
+        super(VQNNModel, self).__init__(name='VQNN')
+
+        self.driver_layer = tf.keras.layers.Dense(3, activation='relu')
+        self.quantum_layer = QuantumLayer(2, execute_on_IBMQ=False, use_parameter_shift_gradient_flow=False)
+        self.output_layer = tf.keras.layers.Dense(1)
+
+    def call(self, input_tensor):
+        try:
+            x = self.driver_layer(input_tensor, training=True)
+            x = self.quantum_layer(x, training=False)
+            x = tf.nn.relu(x)
+            x = self.output_layer(x, training=True)
+        except QiskitCircuitModuleException as qex:
+            print(qex)
+        return x 
